@@ -1,6 +1,5 @@
 """
 QR with Householder reflection functions
-Author: fanxy20@mails.tsinghua.edu.cn
 """
 
 import time
@@ -102,15 +101,13 @@ def eigen_decomposition_qr_shifts(A, tol=1e-6):
 
 if __name__ == '__main__':
     # test for correctness
-    N_list = [30, 50, 70, 90, 100, 120, 150, 200]
+    N_list = [30, 50, 70]
     #N_list = [500]
     conv = np.zeros((len(N_list), 50))
     for i in range(50):
         for j in range(len(N_list)):
             np.random.seed(i)
-            
-            #tmp = np.random.normal(0, 10, (N, N))
-            #tmp = np.random.normal(5, 5, (N_list[j], N_list[j]))
+
             tmp = np.random.uniform(0, 5, (N_list[j], N_list[j]))
             #tmp = np.ones((N, N))
             A = tmp + tmp.T
@@ -119,8 +116,8 @@ if __name__ == '__main__':
             #print(">>>>>>>>>>>>", sums_o5ff)
             conv[j][i] = iter_num
             print("Real rounds: ", iter_num)
-            # for c in range(A.shape[0]):
-            #     np.testing.assert_almost_equal(np.dot(A, evecs[:, c]), evecs[:, c] * evals[c], decimal=3)
-            #print("time: ", time_all)
+            for c in range(A.shape[0]):
+                np.testing.assert_almost_equal(np.dot(A, evecs[:, c]), evecs[:, c] * evals[c], decimal=3)
+            print("time: ", time_all)
     print("mean: ", np.mean(conv, axis=1))
 

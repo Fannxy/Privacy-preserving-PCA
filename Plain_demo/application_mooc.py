@@ -3,6 +3,7 @@ Experiments - Mooc
 Dataset: http://moocdata.cn/data/MOOCCube
 
 This plain-text version is for demonstration about the data integration vertically.
+Care that you should download the dataset to ./Data/Mooc, before running this demo.
 """
 
 import numpy as np
@@ -343,19 +344,19 @@ if __name__ == '__main__':
     np.random.shuffle(popular_concepts)
     d = c // L
 
-    # concept_batch_len = len(popular_concepts) // L
-    # split_concepts = [popular_concepts[i*concept_batch_len:(i+1)*concept_batch_len] for i in range(L)]
+    concept_batch_len = len(popular_concepts) // L
+    split_concepts = [popular_concepts[i*concept_batch_len:(i+1)*concept_batch_len] for i in range(L)]
 
-    # data_each = {}
-    # i = 0
-    # for concept_list in split_concepts:
-    #     d = len(concept_list)
-    #     courses_concept_map = courses_encode(concept_list)
-    #     user_info = users_encode(courses_concept_map, d)
-    #     data_each.update({str(i):user_info})
-    #     i += 1
+    data_each = {}
+    i = 0
+    for concept_list in split_concepts:
+        d = len(concept_list)
+        courses_concept_map = courses_encode(concept_list)
+        user_info = users_encode(courses_concept_map, d)
+        data_each.update({str(i):user_info})
+        i += 1
 
-    # scio.savemat(mooc_path+'data_v5.mat', data_each)
+    scio.savemat(mooc_path+'data_v5.mat', data_each)
     data_each = scio.loadmat(mooc_path+'data_v5.mat')
     # reorgnize the data_dict
     data_each_raw = {}

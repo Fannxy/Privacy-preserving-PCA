@@ -126,69 +126,26 @@ def delete_replicate(A, B):
 #     """
 #     precision_score = 
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
 
-    # # brief test
-    # dim = (30, 5)
-    # k = 3
-    # len_each = dim[0]//k
+    # brief test
+    dim = (30, 5)
+    k = 3
+    len_each = dim[0]//k
 
-    # data = np.random.random(dim)
-    # data_list = [data[i*len_each:(i+1)*len_each] for i in range(k)]
+    data = np.random.random(dim)
+    data_list = [data[i*len_each:(i+1)*len_each] for i in range(k)]
 
-    # cov = cov_generation(data) # calculate the cov for fused data
-    # R_list, v_list = [], []
-    # N_list = []
+    cov = cov_generation(data) # calculate the cov for fused data
+    R_list, v_list = [], []
+    N_list = []
 
-    # for X in data_list: # calculate locally and join in the platform
-    #     R, v, N = find_rv(X)
-    #     R_list.append(R)
-    #     v_list.append(v)
-    #     N_list.append(N)
+    for X in data_list: # calculate locally and join in the platform
+        R, v, N = find_rv(X)
+        R_list.append(R)
+        v_list.append(v)
+        N_list.append(N)
 
-    # cov2 = join_cov(R_list, v_list, N_list)
-
-    # np.testing.assert_almost_equal(cov2, cov)
-
-    # print("CONGRALUTIONS")
-
-    # # data preprocessing for wine_dataset
-    # white_wine = pd.read_csv('./Data/Wine_quality/winequality-white.csv', delimiter=";")
-    # red_wine = pd.read_csv('./Data/Wine_quality/winequality-red.csv', delimiter=";")
-
-    # data_list = [white_wine, red_wine]
-    # path_list = ['./Data/Wine_quality/white.txt', './Data/Wine_quality/red.txt']
-    # R_list = []
-    # v_list = []
-    # N_list = []
-    # Wine = []
-
-    # for i in range(len(data_list)):
-    #     D = data_list[i]
-    #     X = D.values[:, :-1]
-    #     X = min_max_scaler(X)
-    #     R, v, N = find_rv(X)
-    #     #print(R.shape)
-    #     #print(v.shape)
-    #     #RV = np.concatenate([R, v.reshape(11, 1)], axis=1)
-    #     #np.savetxt(path_list[i], RV, delimiter=',', fmt='%.4f')
-    #     R_list.append(R)
-    #     v_list.append(v)
-    #     N_list.append(N)
-    #     Wine.append(X)
-
-    # R_list = np.array([R_list[0], R_list[1]])
-    # v_list = np.array([v_list[0], v_list[1]])
-    # c = join_cov(R_list, v_list, N_list)
-    # print(c.shape)
-
-    # Wine = np.concatenate(Wine, axis=0)
-    # cf = cov_generation(Wine)
-
-    # np.testing.assert_almost_equal(c, cf)
-    # print(c)
-    # print("Equal")
-
-    # # data preprocessing for musk dataset
-    # musk = np.loadtxt('./Data/Musk/musk.txt', delimiter=',')
-    # musk = min_max_scaler(musk)
+    cov2 = join_cov(R_list, v_list, N_list)
+    np.testing.assert_almost_equal(cov2, cov)
+    print("CONGRALUTIONS")

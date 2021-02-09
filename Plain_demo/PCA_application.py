@@ -1,5 +1,7 @@
 """
-Application experiments for eigen decomposition
+Application experiments for PCA.
+
+Care that you should download the dataset to ./Data/Musk, before running this demo.
 """
 import numpy as np
 import pandas as pd

@@ -1,6 +1,5 @@
 """
 Jaocbi methods
-Author:fanxy20@mails.tsinghua.edu.cn
 """
 import time
 import numpy as np
@@ -87,7 +86,7 @@ def jacobi_loop(a, tol=1.0e-5):  # Jacobi method
     assert n > 1
     m = (n+1)//2
     
-    LOOP_INTERVAL = 3 # The iteration numbers for convergence check
+    LOOP_INTERVAL = 50 # The iteration numbers for convergence check
     MAX_ROT = 5*n**2 # Set limit on number of rotations
     eigen_vecs = np.eye(n)
     iter_num = 0
@@ -159,20 +158,15 @@ def svd_jacobi(g, tol=1.0e-6):  # Jacobi method
 
 if __name__ == "__main__":
 
-    # # test correctness
-    # N = 34
 
     # test convergence for jacobi-eigendecomposition
-    N_list = [30, 50, 70, 90, 100, 120, 150, 200]
-    #N_list = [10, 15, 20]
-    conv = np.zeros((len(N_list), 50))
-    for i in range(50):
+    N_list = [10, 15, 20]
+    conv = np.zeros((len(N_list), 3))
+    for i in range(3):
         for j in range(len(N_list)):
             np.random.seed(i)
             
-            #tmp = np.random.normal(0, 10, (N, N))
-            #tmp = np.random.uniform(0, 100, (N_list[j], N_list[j]))
-            tmp = np.random.normal(50, 50, (N_list[j], N_list[j]))
+            tmp = np.random.normal(0, 5, (N_list[j], N_list[j]))
             #tmp = np.ones((N, N))
             A = tmp + tmp.T
             e_iters = estimate_rounds(A)
@@ -181,16 +175,14 @@ if __name__ == "__main__":
             #print(">>>>>>>>>>>>", sums_off)
             conv[j][i] = iter_num
             print("Real rounds: ", iter_num)
-            #for c in range(A.shape[0]):
-            #     np.testing.assert_almost_equal(np.dot(A, evecs[:, c]), evecs[:, c] * evals[c], decimal=3)
+            for c in range(A.shape[0]):
+                np.testing.assert_almost_equal(np.dot(A, evecs[:, c]), evecs[:, c] * evals[c], decimal=3)
     print("mean: ", np.mean(conv, axis=1))
 
 
-    # # test correctness for SVD
-    # N = 10
-    # np.random.seed(2)
-    # G = np.random.random((N, N))
-    # print(G)
-    # sig, U, V = svd_jacobi(G)
-    # print("sig = ", sig)
-    # np.testing.assert_almost_equal(G, np.dot(np.dot(U, sig), V.T), decimal=6)
+    # test correctness for SVD
+    N = 10
+    np.random.seed(2)
+    G = np.random.random((N, N))
+    print(G)
+    sig, U, V = svd_jacobi(G)

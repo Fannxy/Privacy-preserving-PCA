@@ -3,6 +3,7 @@ Experiments - Iot attack
 Dataset: https://archive.ics.uci.edu/ml/datasets/detection_of_IoT_botnet_attacks_N_BaIoT#
 
 This plain-text version is for demonstration about the data integration horizationally.
+Care that you should download the dataset to ./Data/Iot_attack, before running this demo.
 """
 
 import numpy as np
@@ -143,37 +144,34 @@ if __name__ == '__main__':
     print(">>>>> benchmark ")
     train_set = np.concatenate([train_list[item] for item in name_list])
     X_train, y_train = train_set[:, :-1], train_set[:, -1]
-    np.savetxt('./Data/Iot_Attack/9-party.txt', X_train)
-    #model_evaluation_np(X_train, y_train, X_test_final, y_test, k=20)
+    model_evaluation_np(X_train, y_train, X_test_final, y_test, k=20)
 
 
-    # print(">>>>>>>>>>>> Single parties")
-    # for item in name_list:  
-    #     print(">>>>> ITEM: ", item)
-    #     print(train_list[item].shape)
-    #     X_train, y_train = train_list[item][:, :-1], train_list[item][:, -1]
-    #     #model_evaluation_np(X_train, y_train, X_test_final, y_test, k=20)
+    print(">>>>>>>>>>>> Single parties")
+    for item in name_list:  
+        print(">>>>> ITEM: ", item)
+        print(train_list[item].shape)
+        X_train, y_train = train_list[item][:, :-1], train_list[item][:, -1]
+        #model_evaluation_np(X_train, y_train, X_test_final, y_test, k=20)
     
 
-    # print(">>>>>>>>>> Three parties")
-    # S = 3
-    # for i in range(1):
-    #     print("===== party-", i)
-    #     parties_list = random.sample(name_list, S)
-    #     data = np.concatenate([train_list[item] for item in parties_list])
-    #     print(data.shape)
-    #     X, y = data[:, :-1], data[:, -1]
-    #     np.savetxt('./Data/Iot_Attack/3-party.txt', X)
-    #     #model_evaluation_np(X, y, X_test_final, y_test, k=20)
+    print(">>>>>>>>>> Three parties")
+    S = 3
+    for i in range(1):
+        print("===== party-", i)
+        parties_list = random.sample(name_list, S)
+        data = np.concatenate([train_list[item] for item in parties_list])
+        print(data.shape)
+        X, y = data[:, :-1], data[:, -1]
+        model_evaluation_np(X, y, X_test_final, y_test, k=20)
 
 
-    # print(">>>>>>>>>> Five parties")
-    # S = 5
-    # for i in range(1):
-    #     print("===== party-", i)
-    #     parties_list = random.sample(name_list, S)
-    #     data = np.concatenate([train_list[item] for item in parties_list])
-    #     X, y = data[:, :-1], data[:, -1]
-    #     #model_evaluation_np(X, y, X_test_final, y_test, k=20)
-    #     np.savetxt('./Data/Iot_Attack/5-party.txt', X, fmt='%.4f')
+    print(">>>>>>>>>> Five parties")
+    S = 5
+    for i in range(1):
+        print("===== party-", i)
+        parties_list = random.sample(name_list, S)
+        data = np.concatenate([train_list[item] for item in parties_list])
+        X, y = data[:, :-1], data[:, -1]
+        model_evaluation_np(X, y, X_test_final, y_test, k=20)
 
